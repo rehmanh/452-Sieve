@@ -1,17 +1,22 @@
 CPP=g++
 CFLAGS=-std=c++11 -c -g
 
-run client: Client
-	./Client
+all: Client Server
 
-run server: Server
-	./Server
+Client: Client.o Sieve.o
+	$(CPP) Client.o Sieve.o -o Client
 
-Server: Server.cpp
-	$(CPP) $(CFLAGS) Server.cpp -o Server
+Server: Server.o Sieve.o
+	$(CPP) Server.o Sieve.o -o Server
 
-Client: Client.cpp
-	$(CPP) $(CFLAGS) Client.cpp -o Client
+Server.o: Server.cpp
+	$(CPP) $(CFLAGS) Server.cpp
+
+Client.o: Client.cpp
+	$(CPP) $(CFLAGS) Client.cpp
+
+Sieve.o: Sieve.cpp
+	$(CPP) ${CFLAGS} Sieve.cpp
 
 clean:
-	rm Client ; rm Server
+	rm -rf *.o Server Client
